@@ -14,14 +14,14 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-const PORT = parseInt(process.argv[2] || process.env.APP_PORT) || 3000;
-const TOKEN = require('./config').Telegram_TOKEN;
+const PORT = parseInt(process.argv[2] || process.env.PORT) || 3000;
+const TELEGRAM_TOKEN = require('./config').TELEGRAM_TOKEN;
 
 
-const setWebhook = bot('setWebHook', TOKEN);
-const sendMessage = bot('sendMessage', TOKEN);
-const sendPhoto = bot('sendPhoto', TOKEN);
-const WEBHOOK = `${process.argv[2]}/${TOKEN}`;
+const setWebhook = bot('setWebHook', TELEGRAM_TOKEN);
+const sendMessage = bot('sendMessage', TELEGRAM_TOKEN);
+const sendPhoto = bot('sendPhoto', TELEGRAM_TOKEN);
+const WEBHOOK = `${process.argv[2]}/${TELEGRAM_TOKEN}`;
 
 //format the incoming data from Telegram
 const botMessage = (req, resp, next) => {
@@ -64,7 +64,7 @@ const botMessage = (req, resp, next) => {
 
 
 
-app.post(`/${TOKEN}`, botMessage,
+app.post(`/${TELEGRAM_TOKEN}`, botMessage,
     (req, resp) => {
 
         switch (req.telegram.type) {
@@ -128,7 +128,7 @@ app.post(`/${TOKEN}`, botMessage,
             case 'start':
                 sendPhoto({
                     chat_id: `${req.telegram.chat_id}`,
-                    photo: `https://69b46af5.ngrok.io/assets/logo`
+                    photo: `https://randomsg-telegram-bot.herokuapp.com/assets/logo`
                 })
                     .then(result => {
                         console.log('sent logo');
