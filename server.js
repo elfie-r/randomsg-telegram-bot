@@ -1,4 +1,3 @@
-
 const morgan = require('morgan');
 const express = require('express');
 const cors = require('cors');
@@ -15,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = parseInt(process.argv[2] || process.env.PORT) || 3000;
-const TELEGRAM_TOKEN = require('./config').TELEGRAM_TOKEN;
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 
 
 const setWebhook = bot('setWebHook', TELEGRAM_TOKEN);

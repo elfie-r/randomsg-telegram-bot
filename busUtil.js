@@ -1,6 +1,6 @@
 const request = require('request-promise-native');
 const BUS_API_URI = 'http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode=';
-const LTA_TOKEN = require('./config').LTA_TOKEN;
+const LTA_TOKEN = process.env.LTA_TOKEN;
 
 module.exports = (stopid) => {
     const options = {
