@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = process.argv[2] || process.env.PORT || 3000;
-const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN_1.concat('-', process.env.TELEGRAM_TOKEN_2) 
+console.log(TELEGRAM_TOKEN);
 const setWebhook = bot('setWebHook', TELEGRAM_TOKEN);
 const sendMessage = bot('sendMessage', TELEGRAM_TOKEN);
 const sendPhoto = bot('sendPhoto', TELEGRAM_TOKEN);
@@ -171,44 +171,44 @@ app.get('/assets/logo', (req, resp) => {
     resp.status(200).type('png').sendFile(__dirname + '/public/assets/sgbotlogo2.png');
 })
 
-bus(64069)
-    .then((result) => {
-        const services = result.Services;
-        const processed = services
-            .map(v => {
-                return ({
-                    serviceNo: v.ServiceNo,
-                    nextBus: v.NextBus.EstimatedArrival
-                })
-            })
-        console.log(processed);
-
-        if (processed.length > 0) {
-            console.log(processed);
-
-        } else {
-            console.log('nothing!');
-
-        }
-    })
-    .catch(error => {
-        console.log(error);
-    })
-
-//register the webhook
-// setWebhook({ url: WEBHOOK })
+// bus(64069)
 //     .then((result) => {
-//         console.log(result);
-//         //success, so start the server
-//         app.listen(PORT, () => {
-//             console.log(`app listening on ${PORT} at ${new Date()}`);
-//         })
+//         const services = result.Services;
+//         const processed = services
+//             .map(v => {
+//                 return ({
+//                     serviceNo: v.ServiceNo,
+//                     nextBus: v.NextBus.EstimatedArrival
+//                 })
+//             })
+//         console.log(processed);
+
+//         if (processed.length > 0) {
+//             console.log(processed);
+
+//         } else {
+//             console.log('nothing!');
+
+//         }
 //     })
 //     .catch(error => {
 //         console.log(error);
 //     })
 
+//register the webhook
+setWebhook({ url: WEBHOOK })
+    .then((result) => {
+        console.log(result);
+        //success, so start the server
+        app.listen(PORT, () => {
+            console.log(`app listening on ${PORT} at ${new Date()}`);
+        })
+    })
+    .catch(error => {
+        console.log(error);
+    })
 
-app.listen(PORT || 3000, () => {
-    console.log(`app listening on ${PORT} at ${new Date()}`);
-});
+
+// app.listen(PORT || 3000, () => {
+//     console.log(`app listening on ${PORT} at ${new Date()}`);
+// });
