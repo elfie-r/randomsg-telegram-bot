@@ -4,7 +4,7 @@ const cors = require('cors');
 const bot = require('./bot');
 const bus = require('./busUtil');
 const emoji = require('node-emoji');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 
 const app = express();
@@ -99,9 +99,9 @@ app.post(`/${TELEGRAM_TOKEN}`, botMessage,
 
                         if (processed.length > 0) {
                             for (let i in processed) {
-                                let rawArrivalTime = moment(processed[i].nextBus)
+                                let rawArrivalTime = moment(processed[i].nextBus).tz('Asia/Singapore')
                                 let formattedArrivalTime = rawArrivalTime.format('HH:mm:ss');
-                                let seconds = rawArrivalTime.diff(moment(), 'seconds');
+                                let seconds = rawArrivalTime.diff(moment().tz('Asia/Singapore'), 'seconds');
                                 let minutes = Math.floor(seconds / 60);
                                 seconds = seconds % 60;
                                 console.log(minutes);
