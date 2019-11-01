@@ -158,20 +158,20 @@ app.get('/assets/logo', (req, resp) => {
 })
 
 //register the webhook
-setWebhook({ url: WEBHOOK })
-    .then((result) => {
-        console.log(result);
-        //success, so start the server
-        // app.listen(PORT, () => {
-        //     console.log(`app listening on ${PORT} at ${new Date()}`);
-        // })
-    })
-    .catch(error => {
-        console.log(error);
-    })
+// setWebhook({ url: WEBHOOK })
+//     .then((result) => {
+//         console.log(result);
+//         //success, so start the server
+//         // app.listen(PORT, () => {
+//         //     console.log(`app listening on ${PORT} at ${new Date()}`);
+//         // })
+//     })
+//     .catch(error => {
+//         console.log(error);
+//     })
 
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log(`app listening on ${PORT} at ${new Date()}`);
 
 
