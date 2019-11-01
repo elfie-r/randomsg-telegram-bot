@@ -122,7 +122,7 @@ app.post(`/${TELEGRAM_TOKEN}`, botMessage,
                                     .catch(error => console.log(error));
                             }
                         } else {
-                            var apologyText = `Sorry there are no more buses coming.`
+                            var apologyText = emoji.emojify(`Sorry there are no more buses coming.. :disappointed:`);
                             let apologyMessage = {
                                 chat_id: req.telegram.chat_id,
                                 text: apologyText,
