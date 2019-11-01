@@ -14,12 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = process.argv[2] || process.env.PORT || 3000;
-const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN_1.concat('-', process.env.TELEGRAM_TOKEN_2) 
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 
 const setWebhook = bot('setWebHook', TELEGRAM_TOKEN);
 const sendMessage = bot('sendMessage', TELEGRAM_TOKEN);
 const sendPhoto = bot('sendPhoto', TELEGRAM_TOKEN);
 const herokuUrl = 'https://randomsg-telegram-bot.herokuapp.com'
+
 const WEBHOOK = `${herokuUrl}/${TELEGRAM_TOKEN}`;
 
 //format the incoming data from Telegram
@@ -172,29 +173,7 @@ app.get('/assets/logo', (req, resp) => {
     resp.status(200).type('png').sendFile(__dirname + '/public/assets/sgbotlogo2.png');
 })
 
-// bus(64069)
-//     .then((result) => {
-//         const services = result.Services;
-//         const processed = services
-//             .map(v => {
-//                 return ({
-//                     serviceNo: v.ServiceNo,
-//                     nextBus: v.NextBus.EstimatedArrival
-//                 })
-//             })
-//         console.log(processed);
 
-//         if (processed.length > 0) {
-//             console.log(processed);
-
-//         } else {
-//             console.log('nothing!');
-
-//         }
-//     })
-//     .catch(error => {
-//         console.log(error);
-//     })
 
 //register the webhook
 setWebhook({ url: WEBHOOK })
