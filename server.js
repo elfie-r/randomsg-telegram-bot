@@ -15,11 +15,12 @@ app.use(express.urlencoded({ extended: true }))
 
 const PORT = process.argv[2] || process.env.PORT || 3000;
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN_1.concat('-', process.env.TELEGRAM_TOKEN_2) 
-console.log(TELEGRAM_TOKEN);
+
 const setWebhook = bot('setWebHook', TELEGRAM_TOKEN);
 const sendMessage = bot('sendMessage', TELEGRAM_TOKEN);
 const sendPhoto = bot('sendPhoto', TELEGRAM_TOKEN);
-const WEBHOOK = `${process.argv[2]}/${TELEGRAM_TOKEN}`;
+const herokuUrl = 'https://randomsg-telegram-bot.herokuapp.com'
+const WEBHOOK = `${herokuUrl}/${TELEGRAM_TOKEN}`;
 
 //format the incoming data from Telegram
 const botMessage = (req, resp, next) => {
@@ -140,7 +141,7 @@ app.post(`/${TELEGRAM_TOKEN}`, botMessage,
             case 'start':
                 sendPhoto({
                     chat_id: `${req.telegram.chat_id}`,
-                    photo: `https://randomsg-telegram-bot.herokuapp.com/assets/logo`
+                    photo: `${herokuUrl}/assets/logo`
                 })
                     .then(result => {
                         console.log('sent logo');
