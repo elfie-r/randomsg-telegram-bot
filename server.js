@@ -173,14 +173,4 @@ app.get('/assets/logo', (req, resp) => {
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`app listening on ${PORT} at ${new Date()}`);
-
-
-
-
-
-
-
-
-
-
-
+});
