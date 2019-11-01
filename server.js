@@ -94,29 +94,43 @@ app.post(`/${TELEGRAM_TOKEN}`, botMessage,
                                 })
                             })
                         console.log(processed);
-                        for (let i in processed) {
-                            let rawArrivalTime = moment(processed[i].nextBus)
-                            let formattedArrivalTime = rawArrivalTime.format('HH:mm:ss');
-                            let seconds = rawArrivalTime.diff(moment(), 'seconds');
-                            let minutes = Math.floor(seconds / 60);
-                            seconds = seconds % 60;
-                            console.log(minutes);
-                            var text;
-                            if (minutes >= 0) {
-                                text = `Bus *${processed[i].serviceNo}* coming at *${formattedArrivalTime}* (${minutes} minutes ${seconds} seconds)`;
-                            } else {
-                                text = `Bus *${processed[i].serviceNo}* coming at *${formattedArrivalTime}* (a lil late?)`;
-                            }
 
-                            var message = {
+                        if (processed.length > 0) {
+                            for (let i in processed) {
+                                let rawArrivalTime = moment(processed[i].nextBus)
+                                let formattedArrivalTime = rawArrivalTime.format('HH:mm:ss');
+                                let seconds = rawArrivalTime.diff(moment(), 'seconds');
+                                let minutes = Math.floor(seconds / 60);
+                                seconds = seconds % 60;
+                                console.log(minutes);
+                                var text;
+                                if (minutes >= 0) {
+                                    text = `Bus *${processed[i].serviceNo}* coming at *${formattedArrivalTime}* (${minutes} minutes ${seconds} seconds)`;
+                                } else {
+                                    text = `Bus *${processed[i].serviceNo}* coming at *${formattedArrivalTime}* (a lil late?)`;
+                                }
+
+                                var message = {
+                                    chat_id: req.telegram.chat_id,
+                                    text: text,
+                                    parse_mode: 'Markdown',
+                                }
+                                sendMessage(message)
+                                    .then(result => console.log(result))
+                                    .catch(error => console.log(error));
+                            }
+                        } else {
+                            var apologyText = `Sorry there are no more buses coming.`
+                            let apologyMessage = {
                                 chat_id: req.telegram.chat_id,
-                                text: text,
+                                text: apologyText,
                                 parse_mode: 'Markdown',
                             }
-                            sendMessage(message)
+                            sendMessage(apologyMessage)
                                 .then(result => console.log(result))
                                 .catch(error => console.log(error));
                         }
+
                     })
                     .catch(error => {
                         console.log(error);
@@ -168,7 +182,14 @@ bus(64069)
                 })
             })
         console.log(processed);
-        
+
+        if (processed.length > 0) {
+            console.log(processed);
+
+        } else {
+            console.log('nothing!');
+
+        }
     })
     .catch(error => {
         console.log(error);
