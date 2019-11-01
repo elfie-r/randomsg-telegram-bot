@@ -135,7 +135,7 @@ app.post(`/${TOKEN}`, botMessage,
                         sendMessage({
                             chat_id: `${req.telegram.chat_id}`,
                             text: `
-                                <b>Your Random SG Service Bot</b>   <code>Enter /bus &lt;busStopNumber&gt; to get bus arrival times.</code>`,
+                                <b>Your Random SG Service Bot</b>\n<code>Enter /bus &lt;busStopNumber&gt; to get bus arrival times.</code>`,
                             parse_mode: "HTML"
 
                         })
