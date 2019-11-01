@@ -13,9 +13,8 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-const PORT = parseInt(process.argv[2] || process.env.PORT) || 3000;
+const PORT = process.argv[2] || process.env.PORT || 3000;
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-
 
 const setWebhook = bot('setWebHook', TELEGRAM_TOKEN);
 const sendMessage = bot('sendMessage', TELEGRAM_TOKEN);
@@ -163,16 +162,17 @@ setWebhook({ url: WEBHOOK })
     .then((result) => {
         console.log(result);
         //success, so start the server
-        app.listen(PORT, () => {
-            console.log(`app listening on ${PORT} at ${new Date()}`);
-        })
+        // app.listen(PORT, () => {
+        //     console.log(`app listening on ${PORT} at ${new Date()}`);
+        // })
     })
     .catch(error => {
         console.log(error);
     })
 
 
-
+app.listen(PORT, () => {
+    console.log(`app listening on ${PORT} at ${new Date()}`);
 
 
 
